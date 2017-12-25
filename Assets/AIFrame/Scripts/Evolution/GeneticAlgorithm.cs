@@ -38,6 +38,14 @@ namespace AIFrame
 
         public delegate void EvaluationOperator(IEnumerable<Genotype> currentPopulation);
 
+        public delegate void FitnessCalculation(IEnumerable<Genotype> currentPopulation);
+
+        public delegate List<Genotype> SelectionOperator(List<Genotype> currentPopulation);
+
+        public delegate List<Genotype> RecombinationOperator(List<Genotype> intermediatePopulation, uint newPopulationSize);
+
+        public delegate void MutationOperator(List<Genotype> newPopulation);
+
         #endregion
 
         #region 遗传操作方法设定
@@ -51,6 +59,21 @@ namespace AIFrame
         /// 评估种群
         /// </summary>
         public EvaluationOperator Evaluation = AsyncEvaluation;
+
+        /// <summary>
+        /// 选择遗传体
+        /// </summary>
+        public SelectionOperator Selection = DefaultSelectionOperator;
+
+        /// <summary>
+        /// 基因交叉操作
+        /// </summary>
+        public RecombinationOperator Recombination = DefaultRecombinationOperator;
+
+        /// <summary>
+        /// 基因变异操作
+        /// </summary>
+        public MutationOperator Mutation = DefaultMutationOperator;
 
         #endregion
 
@@ -119,14 +142,26 @@ namespace AIFrame
             Running = false;
         }
 
+        /// <summary>
+        /// 启动遗传进程
+        /// </summary>
         public void Start()
         {
             Running = true;
             InitialisePopulation(currentPopulation);
+            Evaluation(currentPopulation);
+        }
+
+        /// <summary>
+        /// 暂停演化过程，开始评估进化
+        /// </summary>
+        void StartEvaluation()
+        {
+            //EvaluationFinished
 
         }
 
         #endregion
-        
+
     }
 }

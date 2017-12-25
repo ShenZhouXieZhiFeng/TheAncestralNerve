@@ -11,8 +11,18 @@ namespace AIFrame
     public class Genotype : IComparable<Genotype>, IEnumerable<double>
     {
         #region 属性
+
         /// <summary>
-        /// 适应性
+        /// 评分,本身
+        /// </summary>
+        public float Evaluation
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// 适应性，相对于整个种群
         /// </summary>
         public double Fitness
         {

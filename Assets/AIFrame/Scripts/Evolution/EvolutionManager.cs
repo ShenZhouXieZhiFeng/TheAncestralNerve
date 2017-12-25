@@ -9,7 +9,6 @@ namespace AIFrame
     /// </summary>
     public class EvolutionManager : SingletonMono<EvolutionManager>
     {
-
         #region 属性
 
         [Header("种群数量")]
@@ -58,21 +57,26 @@ namespace AIFrame
         /// </summary>
         public void StartGenetic()
         {
+            //初始化神经网络
             NeuralNetwork nn = new NeuralNetwork(FNNTopology);
-
+            //初始化遗传算法
             geneticAlgorithm = new GeneticAlgorithm((uint)nn.WeightCount, (uint)PopulationSize);
+            //设定评估方法
+            geneticAlgorithm.Evaluation = Evaluation;
+            //启动遗传过程
+            geneticAlgorithm.Start();
+        }
 
-            geneticAlgorithm.Evaluation = StartEvaluation;
-
-            //20171224
-
+        public void Evolution()
+        {
+            
         }
 
         /// <summary>
-        /// 开始进化
+        /// 评估
         /// </summary>
-        /// <param name="currentPopulation"></param>
-        public void StartEvaluation(IEnumerable<Genotype> currentPopulation) {
+        void Evaluation(IEnumerable<Genotype> currentPopulation)
+        {
 
         }
 
