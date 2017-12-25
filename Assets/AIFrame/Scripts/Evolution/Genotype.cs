@@ -15,7 +15,7 @@ namespace AIFrame
         /// <summary>
         /// 评分,本身
         /// </summary>
-        public float Evaluation
+        public double Evaluation
         {
             get;
             set;

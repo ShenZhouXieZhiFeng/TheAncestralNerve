@@ -16,6 +16,7 @@ namespace AIFrame
         /// 激活函数
         /// </summary>
         public delegate double ActivationFunction(double xValue);
+
         public ActivationFunction NeuronActivationFunction = MathHelper.SigmoidFunction;
 
         /// <summary>

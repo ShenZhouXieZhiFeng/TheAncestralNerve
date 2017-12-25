@@ -30,14 +30,14 @@ namespace AIFrame
         {
             //统计总评分
             uint populationSize = 0;
-            float overallEvaluation = 0;
+            double overallEvaluation = 0;
             foreach (Genotype genotype in currentPopulation)
             {
                 overallEvaluation += genotype.Evaluation;
                 populationSize++;
             }
             //计算平均评分
-            float averageEvaluation = overallEvaluation / populationSize;
+            double averageEvaluation = overallEvaluation / populationSize;
             //计算每个个体的适应性
             foreach (Genotype genotype in currentPopulation)
                 genotype.Fitness = genotype.Evaluation / averageEvaluation;

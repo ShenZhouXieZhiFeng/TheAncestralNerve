@@ -15,6 +15,11 @@ namespace AIFrame
             else return (1.0 / (1.0 + Math.Exp(-_xValue)));
         }
 
+        public static double SoftSignFunction(double xValue)
+        {
+            return xValue / (1 + Math.Abs(xValue));
+        }
+
         /// <summary>
         /// 返回0-1之间的随机数
         /// </summary>

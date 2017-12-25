@@ -6,7 +6,12 @@ using UnityEngine;
 
 public class Tank : Entity
 {
-    public override void GeneticRunningUpdate()
+    protected override double[] SetInputs()
+    {
+        throw new NotImplementedException();
+    }
+
+    protected override void GetOutPuts(double[] outputs)
     {
         throw new NotImplementedException();
     }
@@ -20,4 +25,6 @@ public class Tank : Entity
     {
         throw new NotImplementedException();
     }
+
+  
 }

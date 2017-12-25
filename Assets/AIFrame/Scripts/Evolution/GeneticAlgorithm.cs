@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -36,7 +37,7 @@ namespace AIFrame
 
         public delegate void InitialisationOperator(IEnumerable<Genotype> initialPopulation);
 
-        public delegate void EvaluationOperator(IEnumerable<Genotype> currentPopulation);
+        public delegate void EvaluationOperator(List<Genotype> _newGenotypes);
 
         public delegate void FitnessCalculation(IEnumerable<Genotype> currentPopulation);
 
@@ -45,6 +46,8 @@ namespace AIFrame
         public delegate List<Genotype> RecombinationOperator(List<Genotype> intermediatePopulation, uint newPopulationSize);
 
         public delegate void MutationOperator(List<Genotype> newPopulation);
+
+        public delegate bool CheckTerminationCriterion(IEnumerable<Genotype> currentPopulation);
 
         #endregion
 
@@ -56,7 +59,12 @@ namespace AIFrame
         public InitialisationOperator InitialisePopulation = DefaultPopulationInitialisation;
 
         /// <summary>
-        /// 评估种群
+        /// 计算种群的适应性
+        /// </summary>
+        public FitnessCalculation FitnessCalculationMethod = DefaultFitnessCalculation;
+
+        /// <summary>
+        /// 评估种群,循环的两个环节中的一个
         /// </summary>
         public EvaluationOperator Evaluation = AsyncEvaluation;
 
@@ -75,6 +83,15 @@ namespace AIFrame
         /// </summary>
         public MutationOperator Mutation = DefaultMutationOperator;
 
+        /// <summary>
+        /// 检查是否达到遗传停止的条件
+        /// </summary>
+        public CheckTerminationCriterion TerminationCriterion = null;
+
+        /// <summary>
+        /// 当遗传停止时
+        /// </summary>
+        public Action AlgorithmTerminated;
         #endregion
 
         #region 属性
@@ -100,21 +117,12 @@ namespace AIFrame
         }
 
         /// <summary>
-        /// 在选择进化之前是否进行种群排序
-        /// </summary>
-        public bool SortPopulation
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
         /// 遗传流程是否正在执行
         /// </summary>
         public bool Running
         {
             get;
-            private set;
+            set;
         }
 
         #endregion
@@ -128,17 +136,15 @@ namespace AIFrame
         /// <param name="_populationSize"></param>
         public GeneticAlgorithm(uint _genotypeParamCount,uint _populationSize)
         {
+            //初始化种群
             PopulationSize = _populationSize;
-
             currentPopulation = new List<Genotype>((int)_populationSize);
-
             for (int i = 0; i < _populationSize; i++)
             {
                 currentPopulation.Add(new Genotype(new double[_genotypeParamCount]));
             }
-
+            //初始化参数
             GenerationCount = 1;
-            SortPopulation = true;
             Running = false;
         }
 
@@ -155,10 +161,34 @@ namespace AIFrame
         /// <summary>
         /// 暂停演化过程，开始评估进化
         /// </summary>
-        void StartEvaluation()
+        public void StartEvaluation()
         {
-            //EvaluationFinished
+            Running = false;
+            //计算适应性
+            FitnessCalculationMethod(currentPopulation);
+            //根据适应性排序
+            currentPopulation.Sort();
 
+            if (TerminationCriterion != null && TerminationCriterion(currentPopulation))
+            {
+                if(AlgorithmTerminated != null)
+                    AlgorithmTerminated();
+                return;
+            }
+            //根据设定的筛选函数选中能遗传给下代的基因型
+            List<Genotype> parentPopulation = Selection(currentPopulation);
+
+            //交叉
+            List<Genotype> newPopulation = Recombination(parentPopulation,PopulationSize);
+
+            //突变
+            Mutation(newPopulation);
+
+            //设定为新的种群，重启遗传过程
+            currentPopulation = newPopulation;
+            GenerationCount++;
+
+            Evaluation(currentPopulation);
         }
 
         #endregion
