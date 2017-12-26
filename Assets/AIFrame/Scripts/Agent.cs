@@ -49,7 +49,7 @@ namespace AIFrame
             if(FNN.WeightCount != _genotype.ParameterCount)
                 throw new ArgumentException("WeightCount != Topology");
             //使用基因参数初始化神经网络
-            IEnumerator<double> parameters = _genotype.GetEnumerator();
+            IEnumerator<float> parameters = _genotype.GetEnumerator();
             foreach (NeuralLayer layer in FNN.Layers)
             {
                 for (int i = 0; i < layer.Weights.GetLength(0); i++)

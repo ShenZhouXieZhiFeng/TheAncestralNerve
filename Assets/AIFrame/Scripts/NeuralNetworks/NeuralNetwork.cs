@@ -71,12 +71,12 @@ namespace AIFrame
         /// </summary>
         /// <param name="inputs"></param>
         /// <returns></returns>
-        public double[] ProcessInputs(double[] _inputs)
+        public float[] ProcessInputs(float[] _inputs)
         {
             if (_inputs.Length != Layers[0].NeuronNodeCount)
                 throw new ArgumentException("input length != first layer count");
 
-            double[] outputs = _inputs;
+            float[] outputs = _inputs;
             //层层处理
             foreach (NeuralLayer layer in Layers)
             {

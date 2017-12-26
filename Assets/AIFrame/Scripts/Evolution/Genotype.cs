@@ -8,14 +8,14 @@ namespace AIFrame
     /// <summary>
     /// 基因型
     /// </summary>
-    public class Genotype : IComparable<Genotype>, IEnumerable<double>
+    public class Genotype : IComparable<Genotype>, IEnumerable<float>
     {
         #region 属性
 
         /// <summary>
         /// 评分,本身
         /// </summary>
-        public double Evaluation
+        public float Evaluation
         {
             get;
             set;
@@ -24,7 +24,7 @@ namespace AIFrame
         /// <summary>
         /// 适应性，相对于整个种群
         /// </summary>
-        public double Fitness
+        public float Fitness
         {
             get;
             set;
@@ -33,7 +33,7 @@ namespace AIFrame
         /// <summary>
         /// 基因型
         /// </summary>
-        public double[] parameters;
+        public float[] parameters;
 
         /// <summary>
         /// 基因型长度
@@ -46,7 +46,7 @@ namespace AIFrame
             }
         }
 
-        public double this[int index]
+        public float this[int index]
         {
             get
             {
@@ -61,7 +61,7 @@ namespace AIFrame
 
         #region 方法
 
-        public Genotype(double[] pars)
+        public Genotype(float[] pars)
         {
             parameters = pars;
             Fitness = 0;
@@ -85,9 +85,9 @@ namespace AIFrame
         /// 拷贝返回基因型
         /// </summary>
         /// <returns></returns>
-        public double[] GetParameterCopy()
+        public float[] GetParameterCopy()
         {
-            double[] copy = new double[ParameterCount];
+            float[] copy = new float[ParameterCount];
             for (int i = 0; i < ParameterCount; i++)
             {
                 copy[i] = parameters[i];
@@ -101,7 +101,7 @@ namespace AIFrame
             return _other.Fitness.CompareTo(Fitness);
         }
 
-        public IEnumerator<double> GetEnumerator()
+        public IEnumerator<float> GetEnumerator()
         {
             for (int i = 0; i < parameters.Length; i++)
             {

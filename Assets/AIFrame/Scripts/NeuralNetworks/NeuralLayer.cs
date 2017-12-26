@@ -15,14 +15,14 @@ namespace AIFrame
         /// <summary>
         /// 激活函数
         /// </summary>
-        public delegate double ActivationFunction(double xValue);
+        public delegate float ActivationFunction(float xValue);
 
         public ActivationFunction NeuronActivationFunction = MathHelper.SigmoidFunction;
 
         /// <summary>
         /// 偏置
         /// </summary>
-        private double bias = 1.0d;
+        private float bias = 1.0f;
 
         /// <summary>
         /// 传进来的激活值或数据的数量
@@ -45,7 +45,7 @@ namespace AIFrame
         /// <summary>
         /// 权重矩阵,行数表示输入的数据量（个数），列数为输出的数据量
         /// </summary>
-        public double[,] Weights
+        public float[,] Weights
         {
             get;
             private set;
@@ -65,7 +65,7 @@ namespace AIFrame
             NeuronNodeCount = _nodeCount;
             OutputCount = _outputCount;
             //+1为偏置b
-            Weights = new double[_nodeCount + 1, _outputCount];
+            Weights = new float[_nodeCount + 1, _outputCount];
         }
 
         /// <summary>
@@ -74,15 +74,15 @@ namespace AIFrame
         /// </summary>
         /// <param name="inputs"></param>
         /// <returns></returns>
-        public double[] ProcessInputs(double[] inputs)
+        public float[] ProcessInputs(float[] inputs)
         {
             //矩阵计算时，左边矩阵的列数必须等于右边矩阵的行数
             if (inputs.Length != NeuronNodeCount)
                 throw new ArgumentException("inputs length != node Count");
 
-            double[] sums = new double[OutputCount];
+            float[] sums = new float[OutputCount];
             //将b设置为1，偏置用来影响激活函数的输出
-            double[] biasedInputs = new double[NeuronNodeCount + 1];
+            float[] biasedInputs = new float[NeuronNodeCount + 1];
             inputs.CopyTo(biasedInputs, 0);
             biasedInputs[inputs.Length] = bias;
 
@@ -98,21 +98,14 @@ namespace AIFrame
                 }
             }
 
-            for (int i = 0; i < sums.Length; i++)
+            //应用激活函数
+            if (NeuronActivationFunction != null)
             {
-                double val = MathHelper.SoftSignFunction(sums[i]);
-                sums[i] = val;
-                //EvolutionManager.Instance.Print(val);
+                for (int i = 0; i < sums.Length; i++)
+                {
+                    sums[i] = NeuronActivationFunction(sums[i]);
+                }
             }
-
-            ////应用激活函数
-            //if (NeuronActivationFunction != null)
-            //{
-            //    for (int i = 0; i < sums.Length; i++)
-            //    {
-            //        sums[i] = NeuronActivationFunction(sums[i]);
-            //    }
-            //}
 
             return sums;
         }

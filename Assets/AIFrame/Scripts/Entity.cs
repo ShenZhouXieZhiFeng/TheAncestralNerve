@@ -12,7 +12,7 @@ namespace AIFrame
         /// <summary>
         /// 分数，需要根据需要在演化过程中更新 
         /// </summary>
-        public double AgentScore
+        public float AgentScore
         {
             get { return Agent.Genotype.Evaluation; }
             set { Agent.Genotype.Evaluation = value; }
@@ -30,12 +30,12 @@ namespace AIFrame
         /// 设置输入
         /// </summary>
         /// <returns></returns>
-        protected abstract double[] SetInputs();
+        protected abstract float[] SetInputs();
 
         /// <summary>
         /// 应用输出
         /// </summary>
-        protected abstract void GetOutPuts(double[] outputs);
+        protected abstract void GetOutPuts(float[] outputs);
 
         /// <summary>
         /// 当进化开始，停止各种状态
@@ -55,8 +55,8 @@ namespace AIFrame
         /// </summary>
         public void GeneticUpdate()
         {
-            double[] inputs = SetInputs();
-            double[] outputs = Agent.FNN.ProcessInputs(inputs);
+            float[] inputs = SetInputs();
+            float[] outputs = Agent.FNN.ProcessInputs(inputs);
             GetOutPuts(outputs);
         }
 

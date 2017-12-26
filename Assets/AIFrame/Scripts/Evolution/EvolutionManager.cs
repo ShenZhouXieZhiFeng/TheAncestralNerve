@@ -25,12 +25,12 @@ namespace AIFrame
         /// <summary>
         /// 当新一轮的遗传演化开始,做一些实体复位之类的操作
         /// </summary>
-        public Action OnGeneticRestartAction;
+        public Action<uint> OnGeneticRestartAction;
 
         /// <summary>
         /// 遗传更新中的回调，用来做一些进度条的显示等
         /// </summary>
-        public Action OnGeneticUpdateAction;
+        public Action<float> OnGeneticUpdateAction;
 
         #endregion
 
@@ -66,16 +66,24 @@ namespace AIFrame
 
         #region UNITY
 
+        float currentTime = 0;
         private void Update()
         {
             if (geneticAlgorithm == null)
                 return;
             if (isBegin && geneticAlgorithm.Running)
             {
+                currentTime += Time.deltaTime;
+                if (currentTime > GeneticTimePerTimes)
+                {
+                    EndCurrentGenetic();
+                    currentTime = 0;
+                    return;
+                }
                 //执行更新回调
                 if (OnGeneticUpdateAction != null)
                 {
-                    OnGeneticUpdateAction();
+                    OnGeneticUpdateAction(currentTime / GeneticTimePerTimes);
                 }
                 //执行每个实体的更新函数
                 foreach (Entity entity in entitys)
@@ -116,9 +124,8 @@ namespace AIFrame
 
             if (OnGeneticBeginAction != null)
                 OnGeneticBeginAction();
-
-            //开启循环
-            InvokeRepeating("EndCurrentGenetic", 0, GeneticTimePerTimes);
+            ////开启循环
+            //InvokeRepeating("EndCurrentGenetic", 0, GeneticTimePerTimes);
         }
 
         /// <summary>
@@ -164,7 +171,7 @@ namespace AIFrame
                 entity.OnEvolutionEnd();
             }
             if (OnGeneticRestartAction != null)
-                OnGeneticRestartAction();
+                OnGeneticRestartAction(geneticAlgorithm.GenerationCount);
             geneticAlgorithm.Running = true;
         }
 

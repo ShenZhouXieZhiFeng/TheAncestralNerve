@@ -141,7 +141,7 @@ namespace AIFrame
             currentPopulation = new List<Genotype>((int)_populationSize);
             for (int i = 0; i < _populationSize; i++)
             {
-                currentPopulation.Add(new Genotype(new double[_genotypeParamCount]));
+                currentPopulation.Add(new Genotype(new float[_genotypeParamCount]));
             }
             //初始化参数
             GenerationCount = 1;

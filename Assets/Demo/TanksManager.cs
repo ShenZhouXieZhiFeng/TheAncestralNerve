@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using AIFrame;
+using UnityEngine.UI;
 
 public class TanksManager : MonoBehaviour {
 
@@ -12,12 +13,22 @@ public class TanksManager : MonoBehaviour {
 
     public Tank PrototypeTank;
 
+    public Slider Slider;
+    public Text Times;
+
     private List<Entity> tanks = new List<Entity>();
 
     void Start ()
     {
+        Slider.maxValue = 1;
         PrototypeTank.gameObject.SetActive(false);
         EvolutionManager.Instance.OnGeneticRestartAction = resetTanks;
+        EvolutionManager.Instance.OnGeneticUpdateAction = updateSlider;
+    }
+
+    void updateSlider(float _val)
+    {
+        Slider.value = _val;
     }
 
     bool hasBegin = false;
@@ -47,8 +58,9 @@ public class TanksManager : MonoBehaviour {
         EvolutionManager.Instance.StartGenetic(tanks);
     }
 
-    void resetTanks()
+    void resetTanks(uint _count)
     {
+        Times.text = _count + "";
         for (int i = 0; i < tanks.Count; i++)
         {
             randomSpawn(tanks[i].transform);

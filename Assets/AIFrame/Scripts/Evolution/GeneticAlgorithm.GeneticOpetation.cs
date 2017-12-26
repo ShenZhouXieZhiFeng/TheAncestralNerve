@@ -30,14 +30,14 @@ namespace AIFrame
         {
             //统计总评分
             uint populationSize = 0;
-            double overallEvaluation = 0;
+            float overallEvaluation = 0;
             foreach (Genotype genotype in currentPopulation)
             {
                 overallEvaluation += genotype.Evaluation;
                 populationSize++;
             }
             //计算平均评分
-            double averageEvaluation = overallEvaluation / populationSize;
+            float averageEvaluation = overallEvaluation / populationSize;
             //计算每个个体的适应性
             foreach (Genotype genotype in currentPopulation)
                 genotype.Fitness = genotype.Evaluation / averageEvaluation;
@@ -94,8 +94,8 @@ namespace AIFrame
         public static void CompleteCrossover(Genotype parent1, Genotype parent2, float swapChance, out Genotype offspring1, out Genotype offspring2)
         {
             int parameterCount = parent1.ParameterCount;
-            double[] off1Parameters = new double[parameterCount];
-            double[] off2Parameters = new double[parameterCount];
+            float[] off1Parameters = new float[parameterCount];
+            float[] off2Parameters = new float[parameterCount];
 
             //遍历所有参数，随机交换
             for (int i = 0; i < parameterCount; i++)
