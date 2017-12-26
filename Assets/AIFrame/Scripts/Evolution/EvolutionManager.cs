@@ -68,6 +68,8 @@ namespace AIFrame
 
         private void Update()
         {
+            if (geneticAlgorithm == null)
+                return;
             if (isBegin && geneticAlgorithm.Running)
             {
                 //执行更新回调
@@ -186,6 +188,11 @@ namespace AIFrame
             isBegin = false;
             CancelInvoke("EndCurrentGenetic");
             Debug.Log("遗传停止");
+        }
+
+        public void Print(object msg)
+        {
+            Debug.Log(msg.ToString());
         }
 
         #endregion

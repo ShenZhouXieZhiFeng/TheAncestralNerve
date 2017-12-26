@@ -12,7 +12,7 @@ namespace AIFrame
         {
             if (_xValue > 10) return 1.0f;
             else if (_xValue < -10) return 0.0f;
-            else return (1.0 / (1.0 + Math.Exp(-_xValue)));
+            else return (float)(1.0 / (1.0 + Math.Exp(-_xValue)));
         }
 
         public static double SoftSignFunction(double xValue)

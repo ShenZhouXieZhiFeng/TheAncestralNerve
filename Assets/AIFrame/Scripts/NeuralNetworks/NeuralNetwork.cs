@@ -59,7 +59,7 @@ namespace AIFrame
                 WeightCount += (int)((_topology[i] + 1) * _topology[i + 1]);
             }
             //初始化各神经层
-            Layers = new NeuralLayer[_topology.Length + 1];
+            Layers = new NeuralLayer[_topology.Length - 1];
             for (int i = 0; i < Layers.Length; i++)
             {
                 Layers[i] = new NeuralLayer(_topology[i], _topology[i + 1]);

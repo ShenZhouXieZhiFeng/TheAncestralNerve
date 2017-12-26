@@ -33,7 +33,7 @@ namespace AIFrame
         /// <summary>
         /// 基因型
         /// </summary>
-        private double[] parameters;
+        public double[] parameters;
 
         /// <summary>
         /// 基因型长度

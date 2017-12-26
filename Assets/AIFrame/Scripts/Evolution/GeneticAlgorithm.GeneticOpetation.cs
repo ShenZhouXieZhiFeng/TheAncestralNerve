@@ -63,7 +63,6 @@ namespace AIFrame
             List<Genotype> intermediatePopulation = new List<Genotype>();
             intermediatePopulation.Add(currentPopulation[0]);
             intermediatePopulation.Add(currentPopulation[1]);
-            intermediatePopulation.Add(currentPopulation[2]);
 
             return intermediatePopulation;
         }

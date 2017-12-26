@@ -22,7 +22,7 @@ namespace AIFrame
         /// <summary>
         /// 偏置
         /// </summary>
-        private float bias = 1.0f;
+        private double bias = 1.0d;
 
         /// <summary>
         /// 传进来的激活值或数据的数量
@@ -90,21 +90,29 @@ namespace AIFrame
             //此时这一层的权重是一个矩阵，计算方式应为：(i[0]为输入的第一个值，w为权重矩阵)
             //i[0]*w[0,0] + i[1] * w[1,0] + i[2] * w[2,0] + ...
             //Weights.GetLength(0)行数，Weights.GetLength(1)列数
-            for (int i = 0; i < Weights.GetLength(1); i++)
+            for (int j = 0; j < Weights.GetLength(1); j++)
             {
-                for (int j = 0; j < Weights.GetLength(0); j++)
+                for (int i = 0; i < Weights.GetLength(0); i++)
                 {
-                    sums[i] += biasedInputs[i] * Weights[i, j];
+                    sums[j] += biasedInputs[i] * Weights[i, j];
                 }
             }
 
-            //应用激活函数
-            if (NeuronActivationFunction != null)
+            for (int i = 0; i < sums.Length; i++)
             {
-                for (int i = 0; i < sums.Length; i++) {
-                    sums[i] = NeuronActivationFunction(sums[i]);
-                }
+                double val = MathHelper.SoftSignFunction(sums[i]);
+                sums[i] = val;
+                //EvolutionManager.Instance.Print(val);
             }
+
+            ////应用激活函数
+            //if (NeuronActivationFunction != null)
+            //{
+            //    for (int i = 0; i < sums.Length; i++)
+            //    {
+            //        sums[i] = NeuronActivationFunction(sums[i]);
+            //    }
+            //}
 
             return sums;
         }
