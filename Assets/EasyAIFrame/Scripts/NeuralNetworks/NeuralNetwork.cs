@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace AIFrame
+namespace EasyAIFrame
 {
     /// <summary>
     /// 前馈神经网络

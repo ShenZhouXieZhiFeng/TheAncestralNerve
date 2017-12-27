@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Mine
+  - Tank
   layers:
   - Default
   - TransparentFX

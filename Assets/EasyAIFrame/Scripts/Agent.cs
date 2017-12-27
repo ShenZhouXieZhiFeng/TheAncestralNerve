@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-namespace AIFrame
+namespace EasyAIFrame
 {
     public class Agent : IComparable<Agent>
     {

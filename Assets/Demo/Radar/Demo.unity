@@ -667,7 +667,7 @@ Transform:
   - {fileID: 1039844503}
   - {fileID: 391699584}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &658031494
 GameObject:
@@ -972,7 +972,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &904198128
 GameObject:
@@ -1210,7 +1210,10 @@ MonoBehaviour:
   PopulationSize: 20
   GeneticCountlimit: 100
   GeneticTimePerTimes: 20
-  FNNTopology: 04000000030000000300000002000000
+  InputParameterCount: 4
+  OutPutParameterCount: 2
+  HiddenLayerCount: 2
+  NeuronCountPerLayer: 5
 --- !u!4 &984686402
 Transform:
   m_ObjectHideFlags: 0
@@ -1222,7 +1225,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &984686403
 MonoBehaviour:
@@ -1819,7 +1822,7 @@ RectTransform:
   - {fileID: 6725905}
   - {fileID: 310781301}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace AIFrame
+namespace EasyAIFrame
 {
     public abstract class Entity : MonoBehaviour
     {

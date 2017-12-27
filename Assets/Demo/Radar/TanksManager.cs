@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using AIFrame;
+using EasyAIFrame;
 using UnityEngine.UI;
 
 public class TanksManager : MonoBehaviour {

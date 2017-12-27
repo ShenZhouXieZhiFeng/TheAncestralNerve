@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace AIFrame
+namespace EasyAIFrame
 {
     /// <summary>
     /// 遗传管理
@@ -45,8 +45,20 @@ namespace AIFrame
         [Header("每次遗传的时间(秒)")]
         public float GeneticTimePerTimes = 30f;
 
-        [Header("神经网络拓扑结构")]
-        public uint[] FNNTopology;
+        [Header("输入参数个数")]
+        public uint InputParameterCount = 4;
+
+        [Header("输出参数个数")]
+        public uint OutPutParameterCount = 2;
+
+        [Header("隐藏层层数")]
+        public uint HiddenLayerCount = 2;
+
+        [Header("每一层的神经节点数量")]
+        public uint NeuronCountPerLayer = 5;
+
+        //神经网络拓扑结构
+        private uint[] FNNTopology;
 
         //当前存在的代理集合
         private List<Entity> entitys = new List<Entity>();
@@ -57,7 +69,7 @@ namespace AIFrame
         //从开始到现在的进化次数
         public uint GenerationCount
         {
-            get { return geneticAlgorithm.GenerationCount; }
+            get { return geneticAlgorithm == null ? 0 : geneticAlgorithm.GenerationCount; }
         }
 
         private bool isBegin = false;
@@ -66,7 +78,14 @@ namespace AIFrame
 
         #region UNITY
 
-        float currentTime = 0;
+        protected override void Awake()
+        {
+            base.Awake();
+            setTopology();
+        }
+
+        //当前遗传进度
+        public float currentTime = 0;
         private void Update()
         {
             if (geneticAlgorithm == null)
@@ -98,6 +117,20 @@ namespace AIFrame
         #region 方法
 
         /// <summary>
+        /// 构造神经网络拓扑结构
+        /// </summary>
+        void setTopology()
+        {
+            FNNTopology = new uint[HiddenLayerCount + 2];
+            FNNTopology[0] = InputParameterCount;
+            for (int i = 1; i <= HiddenLayerCount; i++)
+            {
+                FNNTopology[i] = NeuronCountPerLayer;
+            }
+            FNNTopology[FNNTopology.Length - 1] = OutPutParameterCount;
+        }
+
+        /// <summary>
         /// 开始遗传
         /// </summary>
         /// <param name="_entitys">实体集合</param>
@@ -124,8 +157,6 @@ namespace AIFrame
 
             if (OnGeneticBeginAction != null)
                 OnGeneticBeginAction();
-            ////开启循环
-            //InvokeRepeating("EndCurrentGenetic", 0, GeneticTimePerTimes);
         }
 
         /// <summary>

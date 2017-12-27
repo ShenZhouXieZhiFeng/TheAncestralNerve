@@ -2,7 +2,7 @@
 using System.Collections;
 using System;
 
-namespace AIFrame
+namespace EasyAIFrame
 {
     public class SingletonMono<T> : MonoBehaviour where T : MonoBehaviour
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 using Random = UnityEngine.Random;
 
-namespace AIFrame
+namespace EasyAIFrame
 {
     /// <summary>
     /// 基因型

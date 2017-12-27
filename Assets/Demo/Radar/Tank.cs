@@ -1,8 +1,7 @@
-﻿using AIFrame;
-using System;
-using System.Collections;
+﻿using EasyAIFrame;
 using System.Collections.Generic;
 using UnityEngine;
+
 
 public class Tank : Entity
 {
@@ -29,6 +28,10 @@ public class Tank : Entity
             AgentScore++;
             Destroy(other.gameObject);
             MinesManager.Instance.checkMineNums();
+        }
+        else if (other.transform.CompareTag("Tank"))
+        {
+            AgentScore -= 2;
         }
     }
 
@@ -61,7 +64,7 @@ public class Tank : Entity
     /// <returns></returns>
     float getNearestMineAngle()
     {
-        float res = 0;
+        float res = Random.Range(-1f, 1f);
         List<Collider> mines = new List<Collider>(Physics.OverlapSphere(transform.position, CheckDis, MineLayer));
         if (mines != null && mines.Count != 0)
         {

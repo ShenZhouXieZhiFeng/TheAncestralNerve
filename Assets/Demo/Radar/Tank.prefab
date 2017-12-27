@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 54293065430433886}
   m_Layer: 9
   m_Name: Tank
-  m_TagString: Untagged
+  m_TagString: Tank
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -133,4 +133,3 @@ MonoBehaviour:
   TankLayer:
     serializedVersion: 2
     m_Bits: 512
-  Weight: []

@@ -1,7 +1,7 @@
 ﻿using System;
 using Random = UnityEngine.Random;
 
-namespace AIFrame
+namespace EasyAIFrame
 {
     public class MathHelper
     {
