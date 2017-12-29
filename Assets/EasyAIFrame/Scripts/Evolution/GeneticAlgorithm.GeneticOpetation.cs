@@ -10,6 +10,76 @@ namespace EasyAIFrame
     /// </summary>
     public partial class GeneticAlgorithm
     {
+        #region 遗传方法委托声明
+
+        public delegate void InitialisationOperator(IEnumerable<Genotype> initialPopulation);
+
+        public delegate void EvaluationOperator(List<Genotype> _newGenotypes);
+
+        public delegate void FitnessCalculation(IEnumerable<Genotype> currentPopulation);
+
+        public delegate List<Genotype> SelectionOperator(List<Genotype> currentPopulation);
+
+        public delegate List<Genotype> RecombinationOperator(List<Genotype> intermediatePopulation, uint newPopulationSize);
+
+        public delegate void MutationOperator(List<Genotype> newPopulation);
+
+        public delegate bool CheckTerminationCriterion(IEnumerable<Genotype> currentPopulation);
+
+        #endregion
+
+        #region 遗传操作方法声明
+
+        #region 不可替换的方法
+
+        /// <summary>
+        /// 初始化种群
+        /// </summary>
+        public InitialisationOperator InitialisePopulation = DefaultPopulationInitialisation;
+
+        /// <summary>
+        /// 计算种群的适应性
+        /// </summary>
+        public FitnessCalculation FitnessCalculationMethod = DefaultFitnessCalculation;
+
+        /// <summary>
+        /// 评估种群,循环的两个环节中的一个
+        /// </summary>
+        public EvaluationOperator Evaluation = AsyncEvaluation;
+
+        /// <summary>
+        /// 检查是否达到遗传停止的条件
+        /// </summary>
+        public CheckTerminationCriterion TerminationCriterion = null;
+
+        /// <summary>
+        /// 当遗传停止时
+        /// </summary>
+        public Action AlgorithmTerminated;
+
+        #endregion
+
+        #region 可替换的
+
+        /// <summary>
+        /// 选择遗传体
+        /// </summary>
+        public SelectionOperator Selection = RouletteWheelsSelectionOperator;//DefaultSelectionOperator;
+
+        /// <summary>
+        /// 基因交叉操作
+        /// </summary>
+        public RecombinationOperator Recombination = DefaultRecombinationOperator;
+
+        /// <summary>
+        /// 基因变异操作
+        /// </summary>
+        public MutationOperator Mutation = DefaultMutationOperator;
+
+        #endregion
+
+        #endregion
+
         #region 遗传操作方法
 
         /// <summary>
@@ -59,11 +129,43 @@ namespace EasyAIFrame
         /// <returns></returns>
         public static List<Genotype> DefaultSelectionOperator(List<Genotype> currentPopulation)
         {
-            //直接取健壮性最高的前三个基因型
+            //直接取健壮性最高的前2个基因型
             List<Genotype> intermediatePopulation = new List<Genotype>();
             intermediatePopulation.Add(currentPopulation[0]);
             intermediatePopulation.Add(currentPopulation[1]);
 
+            return intermediatePopulation;
+        }
+
+        /// <summary>
+        /// 轮赌盘筛选法,分数越高，选中的可能性越高
+        /// </summary>
+        /// <param name="currentPopulation"></param>
+        /// <returns></returns>
+        public static List<Genotype> RouletteWheelsSelectionOperator(List<Genotype> currentPopulation)
+        {
+            List<Genotype> intermediatePopulation = new List<Genotype>();
+
+            float totalEva = 0;
+            foreach (Genotype geno in currentPopulation)
+            {
+                totalEva += geno.Evaluation;
+            }
+            //随机选两个
+            for (int i = 0; i < 2; i++)
+            {
+                float random = MathHelper.RandomNext() * totalEva;
+                float tempSum = 0;
+                foreach (Genotype geno in currentPopulation)
+                {
+                    tempSum += geno.Evaluation;
+                    if (tempSum >= random)
+                    {
+                        intermediatePopulation.Add(geno);
+                        break;
+                    }
+                }
+            }
             return intermediatePopulation;
         }
 

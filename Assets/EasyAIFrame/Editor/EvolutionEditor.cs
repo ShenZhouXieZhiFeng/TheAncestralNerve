@@ -42,6 +42,16 @@ namespace EasyAIFrame
             EditorGUILayout.LabelField(_this.GenerationCount.ToString());
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.Space();
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("基因交换概率:");
+            EditorGUILayout.LabelField(GeneticAlgorithm.DefCrossSwapProb.ToString());
+            EditorGUILayout.EndHorizontal();
+            EditorGUILayout.Space();
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("基因突变概率:");
+            EditorGUILayout.LabelField(GeneticAlgorithm.DefMutationProb.ToString());
+            EditorGUILayout.EndHorizontal();
+            EditorGUILayout.Space();
         }
     }
 }

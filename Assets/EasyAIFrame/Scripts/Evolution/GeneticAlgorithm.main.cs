@@ -14,84 +14,23 @@ namespace EasyAIFrame
         #region 遗传参数设定
 
         //默认初始化神经的最小值
-        public const float DefInitParamMin = -1.0f;
+        public static float DefInitParamMin = -1.0f;
 
         //默认初始化神经的最大值
-        public const float DefInitParamMax = 1.0f;
+        public static float DefInitParamMax = 1.0f;
 
         //默认的种群杂交的概率
-        public const float DefCrossSwapProb = 0.6f;
+        public static float DefCrossSwapProb = 0.6f;
 
         //默认的基于突变概率
-        public const float DefMutationProb = 0.1f;
+        public static float DefMutationProb = 0.1f;
 
         //默认的突变参数
-        public const float DefMutationAmount = 2.0f;
+        public static float DefMutationAmount = 2.0f;
 
         //默认的突变百分比
-        public const float DefMutationPerc = 1.0f;
+        public static float DefMutationPerc = 1.0f;
 
-        #endregion
-
-        #region 遗传方法委托定义
-
-        public delegate void InitialisationOperator(IEnumerable<Genotype> initialPopulation);
-
-        public delegate void EvaluationOperator(List<Genotype> _newGenotypes);
-
-        public delegate void FitnessCalculation(IEnumerable<Genotype> currentPopulation);
-
-        public delegate List<Genotype> SelectionOperator(List<Genotype> currentPopulation);
-
-        public delegate List<Genotype> RecombinationOperator(List<Genotype> intermediatePopulation, uint newPopulationSize);
-
-        public delegate void MutationOperator(List<Genotype> newPopulation);
-
-        public delegate bool CheckTerminationCriterion(IEnumerable<Genotype> currentPopulation);
-
-        #endregion
-
-        #region 遗传操作方法设定
-
-        /// <summary>
-        /// 初始化种群
-        /// </summary>
-        public InitialisationOperator InitialisePopulation = DefaultPopulationInitialisation;
-
-        /// <summary>
-        /// 计算种群的适应性
-        /// </summary>
-        public FitnessCalculation FitnessCalculationMethod = DefaultFitnessCalculation;
-
-        /// <summary>
-        /// 评估种群,循环的两个环节中的一个
-        /// </summary>
-        public EvaluationOperator Evaluation = AsyncEvaluation;
-
-        /// <summary>
-        /// 选择遗传体
-        /// </summary>
-        public SelectionOperator Selection = DefaultSelectionOperator;
-
-        /// <summary>
-        /// 基因交叉操作
-        /// </summary>
-        public RecombinationOperator Recombination = DefaultRecombinationOperator;
-
-        /// <summary>
-        /// 基因变异操作
-        /// </summary>
-        public MutationOperator Mutation = DefaultMutationOperator;
-
-        /// <summary>
-        /// 检查是否达到遗传停止的条件
-        /// </summary>
-        public CheckTerminationCriterion TerminationCriterion = null;
-
-        /// <summary>
-        /// 当遗传停止时
-        /// </summary>
-        public Action AlgorithmTerminated;
         #endregion
 
         #region 属性

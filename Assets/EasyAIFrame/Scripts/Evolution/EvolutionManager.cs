@@ -66,6 +66,11 @@ namespace EasyAIFrame
         //遗传算法
         private GeneticAlgorithm geneticAlgorithm;
 
+        public GeneticAlgorithm GeneticAlgorithm
+        {
+            get;
+            private set;
+        }
         //从开始到现在的进化次数
         public uint GenerationCount
         {
