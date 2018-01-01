@@ -62,9 +62,10 @@ namespace EasyAIFrame
         #region 可替换的
 
         /// <summary>
-        /// 选择遗传体
+        /// 选择策略
         /// </summary>
-        public SelectionOperator Selection = RouletteWheelsSelectionOperator;//DefaultSelectionOperator;
+        //public SelectionOperator Selection = DefaultSelectionOperator;
+        public SelectionOperator Selection = RouletteWheelsSelectionOperator;
 
         /// <summary>
         /// 基因交叉操作
@@ -189,9 +190,8 @@ namespace EasyAIFrame
             }
             return newPopulation;
         }
-
         /// <summary>
-        /// 基因交叉操作
+        /// 基因交叉操作，单点交叉
         /// </summary>
         public static void CompleteCrossover(Genotype parent1, Genotype parent2, float swapChance, out Genotype offspring1, out Genotype offspring2)
         {
@@ -245,7 +245,6 @@ namespace EasyAIFrame
             {
                 if (MathHelper.RandomNext() < mutationProb)
                 {
-                    //Mutate by random amount in range [-mutationAmount, mutationAmoun]
                     //控制变异后的参数在一定的量内
                     genotype[i] += (float)(MathHelper.RandomNext() * (mutationAmount * 2) - mutationAmount);
                 }
