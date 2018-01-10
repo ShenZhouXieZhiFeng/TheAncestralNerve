@@ -45,7 +45,9 @@ public class TanksManager : MonoBehaviour {
 
     void begin()
     {
+        //获取种群数量
         int targetLength = EvolutionManager.Instance.PopulationSize;
+        //生成相应数量的种群，生成后请勿删除种群单位
         for (int i = 0; i < targetLength; i++)
         {
             GameObject carCopy = Instantiate(PrototypeTank.gameObject);
@@ -55,6 +57,7 @@ public class TanksManager : MonoBehaviour {
             tanks.Add(controllerCopy);
             carCopy.SetActive(true);
         }
+        //将种群几何传递给遗传管理类，并开始遗传进程
         EvolutionManager.Instance.StartGenetic(tanks);
     }
 

@@ -1214,6 +1214,7 @@ MonoBehaviour:
   OutPutParameterCount: 2
   HiddenLayerCount: 2
   NeuronCountPerLayer: 5
+  currentTime: 0
 --- !u!4 &984686402
 Transform:
   m_ObjectHideFlags: 0

@@ -25,12 +25,14 @@ public class Tank : Entity
     {
         if (other.transform.CompareTag("Mine"))
         {
+            //分数提升
             AgentScore++;
             Destroy(other.gameObject);
             MinesManager.Instance.checkMineNums();
         }
         else if (other.transform.CompareTag("Tank"))
         {
+            //分数减少
             AgentScore -= 2;
         }
     }

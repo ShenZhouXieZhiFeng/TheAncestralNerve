@@ -64,8 +64,8 @@ namespace EasyAIFrame
         /// <summary>
         /// 选择策略
         /// </summary>
-        //public SelectionOperator Selection = DefaultSelectionOperator;
-        public SelectionOperator Selection = RouletteWheelsSelectionOperator;
+        //public SelectionOperator Selection = DefaultSelectionOperator;//精英选择
+        public SelectionOperator Selection = RouletteWheelsSelectionOperator;//轮赌盘
 
         /// <summary>
         /// 基因交叉操作

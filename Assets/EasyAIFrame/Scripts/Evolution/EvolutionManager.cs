@@ -11,7 +11,6 @@ namespace EasyAIFrame
     public class EvolutionManager : SingletonMono<EvolutionManager>
     {
         #region 回调事件
-
         /// <summary>
         /// 当遗传开始
         /// </summary>
@@ -31,7 +30,6 @@ namespace EasyAIFrame
         /// 遗传更新中的回调，用来做一些进度条的显示等
         /// </summary>
         public Action<float> OnGeneticUpdateAction;
-
         #endregion
 
         #region 属性
